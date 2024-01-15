@@ -3,7 +3,11 @@
 # docker image inspect caravanacloud/ubi-java:latest 
 # docker run -it --rm caravanacloud/ubi-java:latest bash
 
+# docker build -f Containerfile --no-cache --progress=plain -t caravanacloud/ubi-java:J21F39 .
+# docker push caravanacloud/ubi-java:J21F39
+
 ARG UBI=fedora:39
+
 FROM $UBI
 
 # Root level
@@ -29,4 +33,6 @@ RUN source "/home/$USERNAME/.sdkman/bin/sdkman-init.sh" \
     && sdk default java $JAVA_SDK \
     && sdk install maven
 
-RUN /home/$USERNAME/.sdkman/candidates/java/current/bin/java -version
+ENV PATH="${PATH}:/home/$USERNAME/.sdkman/candidates/java/current/bin/"
+
+RUN java -version
