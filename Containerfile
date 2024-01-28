@@ -21,5 +21,24 @@ RUN groupadd --gid $USER_GID $USERNAME \
 # User level
 USER $USERNAME
 
+# Set the working directory to the user's home directory
+WORKDIR /home/$USERNAME
+
+# Optionally, you can install Maven if it's needed for your Java projects
+# For example, you can use the following commands to install Maven:
+# ARG MAVEN_VERSION=3.8.4
+# ENV MAVEN_HOME=/opt/maven
+# ENV PATH=${MAVEN_HOME}/bin:${PATH}
+# ADD --chown=${USERNAME}:${USERNAME} https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz /tmp
+# RUN tar -xf /tmp/apache-maven-${MAVEN_VERSION}-bin.tar.gz -C /opt \
+#     && ln -s /opt/apache-maven-${MAVEN_VERSION} ${MAVEN_HOME} \
+#     && rm -f /tmp/apache-maven-${MAVEN_VERSION}-bin.tar.gz
+
+# Optionally, you can include commands to verify Java and Maven installations
 # RUN java -version
 # RUN mvn -version
+
+# You can add any additional customization or tools required for your projects here
+
+# This line is not necessary if you are not creating an image meant to be executed directly
+CMD ["bash"]
